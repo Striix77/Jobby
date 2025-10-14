@@ -12,6 +12,7 @@ import {
   View,
 } from "react-native";
 import { useJobStore } from "../stores/JobStore";
+import Job from "../types/jobs";
 import JobListView from "../views/JobListView";
 
 export default function HomeScreen() {
@@ -22,6 +23,7 @@ export default function HomeScreen() {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [salary, setSalary] = useState("");
+  const [status, setStatus] = useState<Job["status"]>("applied");
 
   const handleAddJob = () => {
     if (title && company) {
@@ -31,7 +33,7 @@ export default function HomeScreen() {
         location,
         description,
         salary,
-        status: "applied",
+        status,
         date: new Date().toISOString(),
       });
 
@@ -65,6 +67,7 @@ export default function HomeScreen() {
         animationType="slide"
         transparent={true}
         onRequestClose={() => setIsAddingJob(false)}
+        allowSwipeDismissal={true}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -159,7 +162,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0,0,0,0.5)",
   },
   modalContent: {
     backgroundColor: "white",
@@ -202,6 +205,17 @@ const styles = StyleSheet.create({
   textArea: {
     height: 100,
     textAlignVertical: "top",
+  },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  picker: {
+    height: 50,
+    width: "100%",
+    backgroundColor: "#ec0000ff",
   },
   submitButton: {
     backgroundColor: "#007AFF",

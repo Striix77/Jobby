@@ -4,7 +4,7 @@ export default interface Job {
   company: string;
   location: string;
   salary: string;
-  status: "applied" | "interview" | "offer" | "rejected";
+  status: "applied" | "interviewing" | "offered" | "rejected" | "withdrawn";
   date: string;
   description?: string;
   notes?: string;
