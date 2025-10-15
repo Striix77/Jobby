@@ -76,7 +76,7 @@ export default function HomeScreen() {
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <TouchableOpacity onPress={() => setIsAddingJob(false)}>
-                <Ionicons name="close" size={30} color="#007AFF" />
+                <Ionicons name="close" size={35} color="#007AFF" />
               </TouchableOpacity>
               <Text style={styles.modalTitle}>Add New Job</Text>
             </View>
