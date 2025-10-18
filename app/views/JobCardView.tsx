@@ -12,10 +12,12 @@ import {
 } from "react-native";
 import { useJobStore } from "../stores/JobStore";
 import Job from "../types/jobs";
+import JobModalView from "./JobModalView";
 
 export default function JobCardView({ item }: { item: Job }) {
   const { deleteJob, updateJob } = useJobStore();
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -179,7 +181,8 @@ export default function JobCardView({ item }: { item: Job }) {
                   style={[styles.actionButton, styles.editButton]}
                   onPress={() => {
                     // Handle edit
-                    setIsExpanded(false);
+                    // setIsExpanded(false);
+                    setIsEditing(true);
                   }}
                 >
                   <Ionicons name="create-outline" size={20} color="white" />
@@ -199,6 +202,12 @@ export default function JobCardView({ item }: { item: Job }) {
               </View>
             </View>
           </View>
+          <JobModalView
+            isVisible={isEditing}
+            setIsVisible={setIsEditing}
+            isAddingJob={false}
+            jobID={item.id}
+          />
         </Modal>
       )}
     </>

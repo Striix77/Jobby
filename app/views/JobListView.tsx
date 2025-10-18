@@ -4,7 +4,7 @@ import Job from "../types/jobs";
 import JobCardView from "./JobCardView";
 
 export default function JobListView() {
-  const { jobs, deleteJob, updateJob } = useJobStore();
+  const { jobs } = useJobStore();
 
   const renderJobCard = (item: Job) => <JobCardView item={item} />;
 
