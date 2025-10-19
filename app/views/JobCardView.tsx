@@ -18,8 +18,9 @@ export default function JobCardView({ item }: { item: Job }) {
   const { deleteJob, updateJob } = useJobStore();
   const [isExpanded, setIsExpanded] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [jobStatus, setJobStatus] = useState<Job["status"]>(item.status);
 
-  const getStatusColor = (status: string) => {
+  const getStatusColor = (status: Job["status"]) => {
     switch (status) {
       case "applied":
         return "#3B82F6"; // blue
@@ -37,6 +38,7 @@ export default function JobCardView({ item }: { item: Job }) {
   };
 
   const cycleStatus = (currentStatus: Job["status"]) => {
+    console.log("Cycling status for job:", item.id);
     const statuses: Job["status"][] = [
       "applied",
       "interviewing",
@@ -46,7 +48,7 @@ export default function JobCardView({ item }: { item: Job }) {
     ];
     const currentIndex = statuses.indexOf(currentStatus);
     const nextIndex = (currentIndex + 1) % statuses.length;
-    updateJob(item.id, { status: statuses[nextIndex] });
+    setJobStatus(statuses[nextIndex]);
   };
 
   return (
@@ -67,10 +69,10 @@ export default function JobCardView({ item }: { item: Job }) {
           <View
             style={[
               styles.statusBadge,
-              { backgroundColor: getStatusColor(item.status) },
+              { backgroundColor: getStatusColor(jobStatus) },
             ]}
           >
-            <Text style={styles.statusText}>{item.status}</Text>
+            <Text style={styles.statusText}>{jobStatus}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -79,12 +81,31 @@ export default function JobCardView({ item }: { item: Job }) {
           visible={isExpanded}
           animationType="fade"
           transparent={true}
-          onRequestClose={() => setIsExpanded(false)}
+          allowSwipeDismissal={true}
+          onRequestClose={() => {
+            updateJob(item.id, { status: jobStatus });
+            console.log(
+              "Modal closed, status updated for job:",
+              item.id,
+              jobStatus
+            );
+            setIsExpanded(false);
+          }}
         >
           <View style={styles.modalOverlay}>
             <View style={styles.jobCardExpanded}>
               <View style={styles.expandedHeader}>
-                <TouchableOpacity onPress={() => setIsExpanded(false)}>
+                <TouchableOpacity
+                  onPress={() => {
+                    updateJob(item.id, { status: jobStatus });
+                    console.log(
+                      "Modal closed, status updated for job:",
+                      item.id,
+                      jobStatus
+                    );
+                    setIsExpanded(false);
+                  }}
+                >
                   <Ionicons name="close" size={35} color="#007AFF" />
                 </TouchableOpacity>
                 <Text style={styles.expandedTitle}>Job Details</Text>
@@ -109,15 +130,15 @@ export default function JobCardView({ item }: { item: Job }) {
                     <Text style={styles.detailLabel}>Status</Text>
                   </View>
                   <TouchableWithoutFeedback
-                    onPress={() => cycleStatus(item.status)}
+                    onPress={() => cycleStatus(jobStatus)}
                   >
                     <View
                       style={[
                         styles.statusBadgeLarge,
-                        { backgroundColor: getStatusColor(item.status) },
+                        { backgroundColor: getStatusColor(jobStatus) },
                       ]}
                     >
-                      <Text style={styles.statusTextLarge}>{item.status}</Text>
+                      <Text style={styles.statusTextLarge}>{jobStatus}</Text>
                     </View>
                   </TouchableWithoutFeedback>
                 </View>

@@ -6,7 +6,7 @@ import JobListView from "../views/JobListView";
 import JobModalView from "../views/JobModalView";
 
 export default function HomeScreen() {
-  const { jobs, addJob } = useJobStore();
+  const { jobs } = useJobStore();
   const [isAddingJob, setIsAddingJob] = useState(false);
 
   return (

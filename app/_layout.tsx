@@ -5,6 +5,10 @@ export default function RootLayout() {
     <Stack
       screenOptions={{
         headerTitle: "Jobby",
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: "600",
+        },
       }}
     ></Stack>
   );
