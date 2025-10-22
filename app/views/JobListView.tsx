@@ -24,7 +24,24 @@ export default function JobListView() {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={(() => {
+        switch (statusFilter) {
+          case "applied":
+            return { ...styles.container, backgroundColor: "#e0f0ff" };
+          case "interviewing":
+            return { ...styles.container, backgroundColor: "#fff4e0" };
+          case "offered":
+            return { ...styles.container, backgroundColor: "#e0ffe0" };
+          case "rejected":
+            return { ...styles.container, backgroundColor: "#ffe0e0" };
+          case "withdrawn":
+            return { ...styles.container, backgroundColor: "#f0f0f0" };
+          default:
+            return styles.container;
+        }
+      })()}
+    >
       <View style={styles.header}>
         <ScrollView
           horizontal
@@ -114,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    backgroundColor: "#bcd2ffff",
+    backgroundColor: "#e7fbffff",
   },
   header: {
     flexDirection: "row",

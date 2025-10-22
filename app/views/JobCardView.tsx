@@ -65,6 +65,11 @@ export default function JobCardView({ item }: { item: Job }) {
           <View style={styles.jobTitleContainer}>
             <Text style={styles.jobTitle}>{item.title}</Text>
             <Text style={styles.jobCompany}>{item.company}</Text>
+            {item.interviewDate && item.status === "interviewing" && (
+              <Text style={styles.interviewDate}>
+                {new Date(item.interviewDate).toLocaleString()}
+              </Text>
+            )}
           </View>
           <View
             style={[
@@ -89,6 +94,7 @@ export default function JobCardView({ item }: { item: Job }) {
               item.id,
               jobStatus
             );
+
             setIsExpanded(false);
           }}
         >
@@ -282,6 +288,11 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#6B7280",
     fontWeight: "500",
+  },
+  interviewDate: {
+    fontSize: 15,
+    color: "#F59E0B",
+    fontWeight: "700",
   },
   statusBadge: {
     paddingHorizontal: 12,
