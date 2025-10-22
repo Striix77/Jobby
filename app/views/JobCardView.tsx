@@ -178,6 +178,21 @@ export default function JobCardView({ item }: { item: Job }) {
                   </View>
                 )}
 
+                {/* Interview Date */}
+                {jobStatus === "interviewing" && (
+                  <View style={styles.detailSection}>
+                    <View style={styles.detailRow}>
+                      <Ionicons name="calendar" size={20} color="#6B7280" />
+                      <Text style={styles.detailLabel}>Interview Date</Text>
+                    </View>
+                    <Text style={styles.detailValue}>
+                      {(item.interviewDate &&
+                        new Date(item.interviewDate).toLocaleString()) ||
+                        "Not Set"}
+                    </Text>
+                  </View>
+                )}
+
                 {/* Description */}
                 {item.description && (
                   <View style={styles.detailSection}>

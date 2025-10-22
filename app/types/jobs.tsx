@@ -6,6 +6,7 @@ export default interface Job {
   salary: string;
   status: "applied" | "interviewing" | "offered" | "rejected" | "withdrawn";
   date: string;
+  interviewDate?: string;
   description?: string;
   notes?: string;
 }
